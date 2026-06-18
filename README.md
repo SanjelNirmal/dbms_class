@@ -155,3 +155,13 @@ Locate the Test Connection action link element inside the lower-left corner regi
 Click Test.
 
 Once the validation feedback dialog reports a successful network status confirmation message, click OK, followed by Connect / Finish.
+
+# FILL THE DATA IN STUDENT.sql
+
+```sql
+CREATE TABLE IF NOT EXISTS STUDENT (
+  ID NUMBER(1),
+  Name VARCHAR2(100),
+  class VARCHAR2(50)
+);
+```
