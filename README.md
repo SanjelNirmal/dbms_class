@@ -165,3 +165,16 @@ CREATE TABLE IF NOT EXISTS STUDENT (
   class VARCHAR2(50)
 );
 ```
+
+```SQL
+DROP TABLE student PURGE;
+
+SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'STUDENT';
+
+CREATE TABLESPACE cms
+DATAFILE 'cms01.dbf'
+SIZE 100M
+AUTOEXTEND ON
+NEXT 10M
+
+```
