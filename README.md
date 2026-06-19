@@ -159,14 +159,17 @@ Once the validation feedback dialog reports a successful network status confirma
 # FILL THE DATA IN STUDENT.sql
 
 ```sql
+
+show con_name;
+
+show user;
+
 CREATE TABLE IF NOT EXISTS STUDENT (
   ID NUMBER(1),
   Name VARCHAR2(100),
   class VARCHAR2(50)
 );
-```
 
-```SQL
 DROP TABLE student PURGE;
 
 SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'STUDENT';
@@ -177,12 +180,19 @@ SIZE 100M
 AUTOEXTEND ON
 NEXT 10M
 MAXSIZE 500M;
-```
 
-```sql
-ALTER USER student QUOTA UNLIMITED ON cms;
+ALTER USER NIRMAL QUOTA UNLIMITED ON cms;
 
-ALTER USER student
+ALTER USER NIRMAL
 DEFAULT TABLESPACE cms
 TEMPORARY TABLESPACE temp; 
+
+CREATE TABLE IF NOT EXISTS PERSON (
+  ID NUMBER(1),
+  Name VARCHAR2(100),
+  class VARCHAR2(50)
+);
+
+SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'PERSON';
+
 ```
