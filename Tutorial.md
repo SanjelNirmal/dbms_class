@@ -155,3 +155,4 @@ Locate the Test Connection action link element inside the lower-left corner regi
 Click Test.
 
 Once the validation feedback dialog reports a successful network status confirmation message, click OK, followed by Connect / Finish.
+

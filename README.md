@@ -196,3 +196,136 @@ CREATE TABLE IF NOT EXISTS PERSON (
 SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'PERSON';
 
 ```
+
+
+ALL SQL 
+
+```BASH
+-- ==========================================
+-- TASK 1: Check Current Container Database
+-- ==========================================
+SHOW CON_NAME;
+
+-- ==========================================
+-- TASK 2: Check Current User
+-- ==========================================
+SHOW USER;
+
+-- ==========================================
+-- TASK 3: Create STUDENT Table
+-- Oracle does NOT support IF NOT EXISTS
+-- ==========================================
+CREATE TABLE STUDENT (
+    ID NUMBER(1),
+    NAME VARCHAR2(100),
+    CLASS VARCHAR2(50)
+);
+
+-- ==========================================
+-- TASK 4: Drop STUDENT Table Permanently
+-- PURGE skips recycle bin
+-- ==========================================
+DROP TABLE STUDENT PURGE;
+
+-- ==========================================
+-- TASK 5: Check Table Location
+-- ==========================================
+SELECT OWNER,
+       TABLE_NAME,
+       TABLESPACE_NAME
+FROM ALL_TABLES
+WHERE TABLE_NAME = 'STUDENT';
+
+-- ==========================================
+-- TASK 6: Create Tablespace CMS
+-- ==========================================
+CREATE TABLESPACE CMS
+DATAFILE 'cms01.dbf'
+SIZE 100M
+AUTOEXTEND ON
+NEXT 10M
+MAXSIZE 500M;
+
+-- ==========================================
+-- TASK 7: Give User Unlimited Quota
+-- ==========================================
+ALTER USER NIRMAL
+QUOTA UNLIMITED ON CMS;
+
+-- ==========================================
+-- TASK 8: Set Default Tablespace
+-- ==========================================
+ALTER USER NIRMAL
+DEFAULT TABLESPACE CMS
+TEMPORARY TABLESPACE TEMP;
+
+-- ==========================================
+-- TASK 9: Create PERSON Table
+-- Oracle does NOT support IF NOT EXISTS
+-- ==========================================
+CREATE TABLE PERSON (
+    ID NUMBER(1),
+    NAME VARCHAR2(100),
+    CLASS VARCHAR2(50)
+);
+
+-- ==========================================
+-- TASK 10: Check PERSON Table Tablespace
+-- ==========================================
+SELECT OWNER,
+       TABLE_NAME,
+       TABLESPACE_NAME
+FROM ALL_TABLES
+WHERE TABLE_NAME = 'PERSON';
+
+-- ==========================================
+-- TASK 11: Create STUDENT Table
+-- ==========================================
+CREATE TABLE STUDENT (
+    ID NUMBER(10),
+    ROLLNO NUMBER(3),
+    SNAME VARCHAR2(20),
+    SEM NUMBER(1),
+    BRANCH VARCHAR2(20),
+    MARKS NUMBER(3),
+    PNO NUMBER(3)
+);
+
+-- ==========================================
+-- TASK 12: Describe Structure
+-- ==========================================
+DESC STUDENT;
+
+-- ==========================================
+-- TASK 13: Insert First Record
+-- Must specify BRANCH column since column list used
+-- ==========================================
+INSERT INTO STUDENT
+(ID, ROLLNO, SNAME, SEM, BRANCH, MARKS, PNO)
+VALUES
+(1, 31, 'SUNITA', 4, 'BCA', 40, 121);
+
+-- ==========================================
+-- TASK 14: Insert Records
+-- Values must follow table column order:
+-- ID, ROLLNO, SNAME, SEM, BRANCH, MARKS, PNO
+-- ==========================================
+
+INSERT INTO STUDENT
+VALUES (2, 16, 'NIRMAL', 5, 'CSE', 50, 122);
+
+INSERT INTO STUDENT
+VALUES (23, 16, 'NIRMAL', 5, 'CSE', 55, 122);
+
+INSERT INTO STUDENT
+VALUES (233, 16, 'NIRMAL', 5, 'IT', 65, 122);
+
+INSERT INTO STUDENT
+VALUES (100, 16, 'NIRMAL', 5, 'CSE', 50, 122);
+
+commit;
+-- ==========================================
+-- TASK 15: Display All Records
+-- ==========================================
+SELECT * FROM STUDENT;
+```
