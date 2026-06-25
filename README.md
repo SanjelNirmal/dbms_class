@@ -198,9 +198,9 @@ SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'PE
 ```
 
 
-ALL SQL 
+## ALL SQL 
 
-```BASH
+```sql
 -- ==========================================
 -- TASK 1: Check Current Container Database
 -- ==========================================
@@ -213,22 +213,15 @@ SHOW USER;
 
 -- ==========================================
 -- TASK 3: Create STUDENT Table
--- Oracle does NOT support IF NOT EXISTS
 -- ==========================================
 CREATE TABLE STUDENT (
-    ID NUMBER(1),
+    ID NUMBER(10),
     NAME VARCHAR2(100),
     CLASS VARCHAR2(50)
 );
 
 -- ==========================================
--- TASK 4: Drop STUDENT Table Permanently
--- PURGE skips recycle bin
--- ==========================================
-DROP TABLE STUDENT PURGE;
-
--- ==========================================
--- TASK 5: Check Table Location
+-- TASK 4: Check Table Location
 -- ==========================================
 SELECT OWNER,
        TABLE_NAME,
@@ -237,40 +230,21 @@ FROM ALL_TABLES
 WHERE TABLE_NAME = 'STUDENT';
 
 -- ==========================================
--- TASK 6: Create Tablespace CMS
+-- TASK 5: Drop STUDENT Table Permanently
 -- ==========================================
-CREATE TABLESPACE CMS
-DATAFILE 'cms01.dbf'
-SIZE 100M
-AUTOEXTEND ON
-NEXT 10M
-MAXSIZE 500M;
+DROP TABLE STUDENT PURGE;
 
 -- ==========================================
--- TASK 7: Give User Unlimited Quota
--- ==========================================
-ALTER USER NIRMAL
-QUOTA UNLIMITED ON CMS;
-
--- ==========================================
--- TASK 8: Set Default Tablespace
--- ==========================================
-ALTER USER NIRMAL
-DEFAULT TABLESPACE CMS
-TEMPORARY TABLESPACE TEMP;
-
--- ==========================================
--- TASK 9: Create PERSON Table
--- Oracle does NOT support IF NOT EXISTS
+-- TASK 6: Create PERSON Table
 -- ==========================================
 CREATE TABLE PERSON (
-    ID NUMBER(1),
+    ID NUMBER(10),
     NAME VARCHAR2(100),
     CLASS VARCHAR2(50)
 );
 
 -- ==========================================
--- TASK 10: Check PERSON Table Tablespace
+-- TASK 7: Check PERSON Table Tablespace
 -- ==========================================
 SELECT OWNER,
        TABLE_NAME,
@@ -279,7 +253,7 @@ FROM ALL_TABLES
 WHERE TABLE_NAME = 'PERSON';
 
 -- ==========================================
--- TASK 11: Create STUDENT Table
+-- TASK 8: Create STUDENT Table
 -- ==========================================
 CREATE TABLE STUDENT (
     ID NUMBER(10),
@@ -292,24 +266,15 @@ CREATE TABLE STUDENT (
 );
 
 -- ==========================================
--- TASK 12: Describe Structure
+-- TASK 9: Describe Structure
 -- ==========================================
 DESC STUDENT;
 
 -- ==========================================
--- TASK 13: Insert First Record
--- Must specify BRANCH column since column list used
+-- TASK 10: Insert Records
 -- ==========================================
 INSERT INTO STUDENT
-(ID, ROLLNO, SNAME, SEM, BRANCH, MARKS, PNO)
-VALUES
-(1, 31, 'SUNITA', 4, 'BCA', 40, 121);
-
--- ==========================================
--- TASK 14: Insert Records
--- Values must follow table column order:
--- ID, ROLLNO, SNAME, SEM, BRANCH, MARKS, PNO
--- ==========================================
+VALUES (1, 31, 'SUNITA', 4, 'BCA', 40, 121);
 
 INSERT INTO STUDENT
 VALUES (2, 16, 'NIRMAL', 5, 'CSE', 50, 122);
@@ -323,9 +288,80 @@ VALUES (233, 16, 'NIRMAL', 5, 'IT', 65, 122);
 INSERT INTO STUDENT
 VALUES (100, 16, 'NIRMAL', 5, 'CSE', 50, 122);
 
-commit;
+COMMIT;
+
 -- ==========================================
--- TASK 15: Display All Records
+-- TASK 11: Display All Records
 -- ==========================================
 SELECT * FROM STUDENT;
+
+-- ==========================================
+-- TASK 12: Drop Table
+-- ==========================================
+DROP TABLE STUDENT PURGE;
+
+-- ==========================================
+-- TASK 13: Create STUDENT with Constraints
+-- ==========================================
+CREATE TABLE STUDENT (
+    RollNo NUMBER(3)
+        CONSTRAINT pk_student PRIMARY KEY,
+
+    Name VARCHAR2(20)
+        CONSTRAINT nn_student_name NOT NULL,
+
+    Email VARCHAR2(50)
+        CONSTRAINT uq_student_email UNIQUE,
+
+    Marks NUMBER(3)
+        CONSTRAINT ck_student_marks
+        CHECK (Marks >= 0)
+);
+
+-- ==========================================
+-- TASK 14: Describe Table
+-- ==========================================
+DESC STUDENT;
+
+-- ==========================================
+-- TASK 15: Insert Records
+-- ==========================================
+INSERT INTO STUDENT
+VALUES (101, 'Aarav', 'aarav@example.com', 85);
+
+INSERT INTO STUDENT
+VALUES (102, 'Priya', 'priya@example.com', 92);
+
+INSERT INTO STUDENT
+VALUES (103, 'Rohan', 'rohan@example.com', 78);
+
+INSERT INTO STUDENT
+VALUES (104, 'Sneha', 'sneha@example.com', 88);
+
+INSERT INTO STUDENT
+VALUES (105, 'Vikram', 'vikram@example.com', 95);
+
+COMMIT;
+
+-- ==========================================
+-- TASK 16: Display Records
+-- ==========================================
+SELECT * FROM STUDENT;
+
+
+-- ==========================================
+-- TASK 17: Create Backup Table Using CTAS
+-- CTAS = Create Table As Select
+-- ==========================================
+CREATE TABLE NEW_TABLE_STUDENT AS
+SELECT * FROM STUDENT;
+
+-- ==========================================
+-- TASK 18: Display Backup Table Records
+-- ==========================================
+SELECT * FROM NEW_TABLE_STUDENT;
+
+COMMIT;
+
+
 ```
