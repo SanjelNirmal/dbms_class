@@ -159,48 +159,6 @@ Once the validation feedback dialog reports a successful network status confirma
 # FILL THE DATA IN STUDENT.sql
 
 ```sql
-
-show con_name;
-
-show user;
-
-CREATE TABLE IF NOT EXISTS STUDENT (
-  ID NUMBER(1),
-  Name VARCHAR2(100),
-  class VARCHAR2(50)
-);
-
-DROP TABLE student PURGE;
-
-SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'STUDENT';
-
-CREATE TABLESPACE cms
-DATAFILE 'cms01.dbf'
-SIZE 100M
-AUTOEXTEND ON
-NEXT 10M
-MAXSIZE 500M;
-
-ALTER USER NIRMAL QUOTA UNLIMITED ON cms;
-
-ALTER USER NIRMAL
-DEFAULT TABLESPACE cms
-TEMPORARY TABLESPACE temp; 
-
-CREATE TABLE IF NOT EXISTS PERSON (
-  ID NUMBER(1),
-  Name VARCHAR2(100),
-  class VARCHAR2(50)
-);
-
-SELECT owner, table_name, tablespace_name FROM all_tables WHERE table_name = 'PERSON';
-
-```
-
-
-## ALL SQL 
-
-```sql
 -- ==========================================
 -- TASK 1: Check Current Container Database
 -- ==========================================
@@ -362,6 +320,82 @@ SELECT * FROM STUDENT;
 SELECT * FROM NEW_TABLE_STUDENT;
 
 COMMIT;
+
+-- ==========================================
+-- TASK 19: Create PROJECT Table
+-- ==========================================
+CREATE TABLE PROJECT (
+    PNO NUMBER(3) PRIMARY KEY,
+    PNAME VARCHAR2(20),
+    DURATION NUMBER(2)
+);
+
+-- ==========================================
+-- TASK 20: Create STUDENTNEW Table
+-- ==========================================
+CREATE TABLE STUDENTNEW (
+    ROLLNO NUMBER(3) PRIMARY KEY,
+    SNAME VARCHAR2(20),
+    SEM NUMBER(1),
+    BRANCH VARCHAR2(20),
+    MARKS NUMBER(2),
+    PNO NUMBER(3),
+    CONSTRAINT fk_project
+        FOREIGN KEY (PNO)
+        REFERENCES PROJECT(PNO)
+);
+
+-- ==========================================
+-- TASK 21: Insert Records into PROJECT
+-- ==========================================
+INSERT INTO PROJECT VALUES (101, 'Library', 6);
+INSERT INTO PROJECT VALUES (102, 'Hospital', 8);
+INSERT INTO PROJECT VALUES (103, 'Payroll', 4);
+INSERT INTO PROJECT VALUES (104, 'Inventory', 5);
+INSERT INTO PROJECT VALUES (105, 'Ecommerce', 10);
+
+-- ==========================================
+-- TASK 22: Insert Records into STUDENTNEW
+-- ==========================================
+INSERT INTO STUDENTNEW
+VALUES (1, 'NIRMAL', 5, 'BCA', 85, 101);
+
+INSERT INTO STUDENTNEW
+VALUES (2, 'SUNITA', 4, 'BCA', 80, 102);
+
+INSERT INTO STUDENTNEW
+VALUES (3, 'ROSHAN', 5, 'BCA', 75, 103);
+
+INSERT INTO STUDENTNEW
+VALUES (4, 'PRIYA', 6, 'BCA', 90, 104);
+
+INSERT INTO STUDENTNEW
+VALUES (5, 'AARAV', 5, 'BCA', 88, 105);
+
+COMMIT;
+
+-- ==========================================
+-- TASK 23: Display PROJECT Records
+-- ==========================================
+SELECT * FROM PROJECT;
+
+-- ==========================================
+-- TASK 24: Display STUDENTNEW Records
+-- ==========================================
+SELECT * FROM STUDENTNEW;
+
+-- ==========================================
+-- TASK 25: Display Student with Project Details
+-- ==========================================
+SELECT S.ROLLNO,
+       S.SNAME,
+       S.BRANCH,
+       S.MARKS,
+       P.PNAME,
+       P.DURATION
+FROM STUDENTNEW S
+JOIN PROJECT P
+ON S.PNO = P.PNO;
 
 
 ```
